@@ -41,19 +41,31 @@ int main()
     int n_data_caches;
     input >> n_data_caches;
 
+    //! read from a file N times in a certain way
+    // double x, y;
+    // for (auto id = 0; id < n_data_caches; ++id)
+    // {
+    //     input >> x >> y;
+    //     std::string line;
+    //     std::string line1;
+    //     std::getline(input, line);
+    //     std::getline(input, line1);
+    //     std::cout<<line1;
+    //     // std::cout << x << " " << y;
+    //     newline();
+    // }
+
     auto x = std::make_unique<data::data>();
 
     // std::vector<int> integers_from_string;
+    int row_id=0;
     for (auto id = n_data_caches; id > 0; id--)
     {
         input >> x->energyScale >> x->squareScale;
-        // std::cout << x->energyScale << " " << x->squareScale;
-        // newline();
         std::string discarded_line;
-        std::getline(input, discarded_line);
         std::string current_line;
+        std::getline(input, discarded_line);
         std::getline(input, current_line);
-        // std::cout << line1;
         std::string number_catcher;
         std::string space = " ";
         std::string endline = "\n";
@@ -75,6 +87,7 @@ int main()
             }
         }
         x->plotScales.emplace_back(cached_numbers);
-        printArray<int>(x->plotScales.at(0));
+        printArray<int>(x->plotScales.at(row_id));
+        row_id++;
     }
 }
