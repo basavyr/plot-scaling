@@ -17,6 +17,22 @@ void App()
 
 std::ifstream input("../data/data.in");
 
+template <typename T>
+void showIT(T &&arg)
+{
+    std::cout << arg;
+    newline();
+}
+
+template <typename T>
+void printArray(std::vector<T> &v)
+{
+    for (auto &&n : v)
+    {
+        showIT(n);
+    }
+}
+
 int main()
 {
     // App();
@@ -26,27 +42,32 @@ int main()
 
     auto x = std::make_unique<data::data>();
 
+    std::vector<int> integers_from_string;
     for (auto id = n_data_caches; id > 0; id--)
     {
         input >> x->energyScale >> x->squareScale;
         // std::cout << x->energyScale << " " << x->squareScale;
         // newline();
-        std::string line0;
-        std::getline(input, line0);
-        std::string line1;
-        std::getline(input, line1);
+        std::string discarded_line;
+        std::getline(input, discarded_line);
+        std::string current_line;
+        std::getline(input, current_line);
         // std::cout << line1;
         std::string number_catcher;
-        for (auto xid = line1.begin(); xid < line1.end(); ++xid)
+        std::string space = " ";
+        for (auto id = 0; id < current_line.size(); ++id)
         {
-            // number_catcher.append();
-            number_catcher.append(xid.base());
-            std::cout<<xid.base();
-            // if (std::strncmp(xid.base(), "1", 1))
-            // {
-            //     std::cout << "space";
-            //     newline();
-            // }
+            auto yy = current_line.at(id);
+            std::string c_yy{yy};
+            number_catcher.append(c_yy);
+            if (c_yy == space)
+            {
+                integers_from_string.emplace_back(std::stoi(number_catcher));
+                // std::cout << number_catcher;
+                // newline();
+                number_catcher.clear();
+            }
         }
     }
+    printArray<int>(integers_from_string);
 }
