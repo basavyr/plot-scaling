@@ -29,8 +29,9 @@ void printArray(std::vector<T> &v)
 {
     for (auto &&n : v)
     {
-        showIT(n);
+        std::cout << n << " ";
     }
+    newline();
 }
 
 int main()
@@ -42,7 +43,7 @@ int main()
 
     auto x = std::make_unique<data::data>();
 
-    std::vector<int> integers_from_string;
+    // std::vector<int> integers_from_string;
     for (auto id = n_data_caches; id > 0; id--)
     {
         input >> x->energyScale >> x->squareScale;
@@ -55,6 +56,8 @@ int main()
         // std::cout << line1;
         std::string number_catcher;
         std::string space = " ";
+        std::string endline = "\n";
+        std::vector<int> cached_numbers;
         for (auto id = 0; id < current_line.size(); ++id)
         {
             auto yy = current_line.at(id);
@@ -62,12 +65,16 @@ int main()
             number_catcher.append(c_yy);
             if (c_yy == space)
             {
-                integers_from_string.emplace_back(std::stoi(number_catcher));
-                // std::cout << number_catcher;
-                // newline();
+                cached_numbers.emplace_back(std::stoi(number_catcher));
+                number_catcher.clear();
+            }
+            if (id == current_line.size() - 1)
+            {
+                cached_numbers.emplace_back(std::stoi(number_catcher));
                 number_catcher.clear();
             }
         }
+        x->plotScales.emplace_back(cached_numbers);
+        printArray<int>(x->plotScales.at(0));
     }
-    printArray<int>(integers_from_string);
 }
